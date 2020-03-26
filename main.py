@@ -1,12 +1,13 @@
 from tkinter import *
 from tkinter import filedialog
 import os
-import re
+import shutil
 from collections import defaultdict
 
 extList = ["nes", "fds"]
 #path = ('/media/hmp/68C628FE738DB200/Jogos/roms/NES')
 path = ('/home/hmp/NES1')
+tmppath = path + '/tmp'
 suffix_list = ['[', '(']
 suffix = '[!]'
 
@@ -32,6 +33,13 @@ def full_list_generator(path, extlist):
 def locate_equals(filelist):
     repeated_dict = {}
     filelist.sort()
+    if not os.path.exists(tmppath):
+        try:
+            os.mkdir(tmppath)
+        except:
+            print("Impossible to create dir")
+            quit()
+
     arq = ""
     for file in filelist:
         for letter in file:
@@ -40,11 +48,15 @@ def locate_equals(filelist):
         if arq.endswith(" "): arq = arq[0:-1]
         repeated_dict[arq] = [file for file in filelist if file.startswith(arq)]
         arq = ""
+    for key, value in repeated_dict.items():
+        if len(value) <= 1: shutil.copy(path + '/' + value[0], tmppath)
 
-    final_dict = {key: repeated_dict[key] for key in repeated_dict if len(repeated_dict[key]) > 1}
+    final_dict = {key: repeated_dict[key] for key in repeated_dict if len(repeated_dict[key]) > 1 }
+
 
     return final_dict
 
+## pega todos os arquivos na pasta PATH e salva em file_list
 file_list = full_list_generator(path, extList)
 root = Tk()
 
@@ -74,7 +86,6 @@ for item in file_list:
     files_lbox.insert(END, item)
 #fim da listagem inicial - todas as outras vem do refresh button
 
-key = '4 Nin Uchi Mahjong'
 teste = locate_equals(file_list)
 print(teste)
 
