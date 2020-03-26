@@ -1,0 +1,14 @@
+'89 Dennou Kyuusei Uranai (J).nes
+3-D Battles of World Runner, The (U).nes
+3D Block [!][p2].nes
+3D Block [p1].nes
+3D Block [p1][o1].nes
+3D Block [p2].nes
+AUAUAU.nes
+teste2.nes
+teste3.nes
+teste4.nes
+teste5.nes
+teste6.nes
+teste7.nes
+teste8.nes
