@@ -5,7 +5,7 @@ import shutil
 from collections import defaultdict
 
 extList = ["nes", "fds"]
-# path = ('/media/hmp/68C628FE738DB200/Jogos/roms/NES')
+#path = ('/media/hmp/68C628FE738DB200/Jogos/roms/NES')
 path = ('/home/hmp/NES1')
 tmppath = path + '/tmp'
 suffix_list = ['[', '(']
@@ -27,24 +27,29 @@ def full_list_generator(path, extlist):
         files_extension = [arq for arq in files if
                            arq.lower().endswith("." + extlist[i])]  # testa se as extenções são validas
         final_list = final_list + files_extension
-
     final_list.sort()
     return final_list
 
 
 def dict_gen(filelist):
-    rep_dict = {}
+    all_dict = {}
     filelist.sort()
     arq = ""
     for file in filelist:
         for letter in file:
             if letter == '[' or letter == '(' or letter == '.': break
             arq = arq + letter
-        if arq.endswith(" "): arq = arq[0:-1]
-        rep_dict[arq] = [file for file in filelist if file.startswith(arq)]
+        if arq.endswith(" "):
+            arq = arq[0:-1]
+        all_dict[arq] = []
+        #all_dict[key] = [file for file in filelist if file.startswith(arq)]
         arq = ""
-    final_dict_rep = {key: rep_dict[key] for key in rep_dict if len(rep_dict[key]) > 1}
-    final_dict_single = {key: rep_dict[key] for key in rep_dict if len(rep_dict[key]) == 1}
+    print(all_dict)
+
+    final_dict_rep = {key: all_dict[key] for key in all_dict if len(all_dict[key]) > 1}
+    final_dict_single = {key: all_dict[key] for key in all_dict if len(all_dict[key]) == 1}
+    print(final_dict_single)
+    print(final_dict_rep)
     return final_dict_rep, final_dict_single
 
 
@@ -62,7 +67,13 @@ def start_org(dict):
 
 def next_list(dict):
     global pos_control
-    actual_key = list(dict.keys())[pos_control]
+
+    teste = files_lbox.curselection()
+    print(teste)
+    try:
+        actual_key = list(dict.keys())[pos_control]
+    except:
+        return print('Finish')
     pos_control = pos_control + 1
     files_lbox.delete(0, END)
     for value in dict[actual_key]:
@@ -90,6 +101,7 @@ rightFrame.pack(side=RIGHT)
 
 files_lbox = Listbox(leftFrame)
 files_lbox.pack(side=TOP)
+
 
 start_button = Button(rightFrame, text="start", command=lambda: start_org(single_dict))
 next_button = Button(rightFrame, text="next", command=lambda: next_list(repeated_dict))
