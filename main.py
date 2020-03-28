@@ -42,7 +42,8 @@ def dict_gen(filelist):
         if arq.endswith(" "):
             arq = arq[0:-1]
         all_dict[arq] = []
-        #all_dict[key] = [file for file in filelist if file.startswith(arq)]
+        print(len(arq))
+        all_dict[arq] = [file for file in filelist if file.startswith(arq) and (file[len(arq)] == ' ' or file[len(arq)] == '.')]
         arq = ""
     print(all_dict)
 
