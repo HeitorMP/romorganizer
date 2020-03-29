@@ -1,9 +1,12 @@
-import re
-string = 'lalal lalal abc [] (teste).nes'
-string2 = 'Boogerman.nes'
-string3 = 'LA - ga.to(teste).ses'
+from flashtext import KeywordProcessor
 
-teste = re.findall('^.[.\w\s-]+', string3)
+key_word = KeywordProcessor()
 
-print(teste)
+dict = {'teste': ['teste.nes', 'teste1.nes' , 'teste teste.nes']}
+arq = 'teste'
+
+
+
+print(key_word.get_all_keywords(dict))
+
 

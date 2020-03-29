@@ -2,22 +2,16 @@ from tkinter import *
 from tkinter import filedialog
 import os
 import shutil
-from collections import defaultdict
+
 
 extList = ["nes", "fds"]
 #path = ('/media/hmp/68C628FE738DB200/Jogos/roms/NES')
-path = ('/home/hmp/NES1')
-tmppath = path + '/tmp'
+#path = ('/home/hmp/NES1')
+
 suffix_list = ['[', '(']
 suffix = '[!]'
 pos_control = 0
-
-def refresh_list():
-    print("teste")
-    files_lbox.delete(0, END)
-    for item in full_list_generator(path, extList):
-        files_lbox.insert(END, item)
-
+path =''
 
 def full_list_generator(path, extlist):
     final_list = []
@@ -82,12 +76,15 @@ def copyselect(evt):
     value = files_lbox.get(ANCHOR)
     shutil.copy(path + '/' + value, tmppath)
 
-## pega todos os arquivos na pasta PATH e salva em file_list
+
+# pega todos os arquivos na pasta PATH e salva em file_list
+path = filedialog.askdirectory()
+tmppath = path + '/tmp'
+
 file_list = full_list_generator(path, extList)
 repeated_dict, single_dict = dict_gen(file_list)
 root = Tk()
 
-# path = filedialog.askdirectory()
 
 filesLabel = Label(root, text="Files:", bg="red", fg="black")
 filesLabel.pack()
