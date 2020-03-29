@@ -68,19 +68,19 @@ def start_org(dict):
 
 def next_list(dict):
     global pos_control
-
-    teste = files_lbox.curselection()
-    print(teste)
     try:
         actual_key = list(dict.keys())[pos_control]
     except:
         return print('Finish')
     pos_control = pos_control + 1
+    files_lbox.bind('<<ListboxSelect>>', copyselect)
     files_lbox.delete(0, END)
     for value in dict[actual_key]:
         files_lbox.insert(END, value)
 
-
+def copyselect(evt):
+    value = files_lbox.get(ANCHOR)
+    shutil.copy(path + '/' + value, tmppath)
 
 ## pega todos os arquivos na pasta PATH e salva em file_list
 file_list = full_list_generator(path, extList)
@@ -95,23 +95,23 @@ buttonLabel = Label(root)
 buttonLabel.pack()
 
 leftFrame = Frame(root)
-leftFrame.pack(side=LEFT)
+leftFrame.pack(side=LEFT, expand=YES)
 
 rightFrame = Frame(root)
 rightFrame.pack(side=RIGHT)
 
 files_lbox = Listbox(leftFrame)
-files_lbox.pack(side=TOP)
-
+files_lbox.pack(fill=BOTH, expand=YES)
 
 start_button = Button(rightFrame, text="start", command=lambda: start_org(single_dict))
 next_button = Button(rightFrame, text="next", command=lambda: next_list(repeated_dict))
 start_button.pack()
 next_button.pack()
 
+
 # lista os arquivos ao abrir o programa - sera substituido por um navegador de arquivo.
-# for item in file_list:
-#    files_lbox.insert(END, item)
+for item in file_list:
+    files_lbox.insert(END, item)
 # fim da listagem inicial - todas as outras vem do refresh button
 
 
