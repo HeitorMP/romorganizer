@@ -111,5 +111,5 @@ for item in file_list:
     files_lbox.insert(END, item)
 # fim da listagem inicial - todas as outras vem do refresh button
 
-#comentario
+#comentarioasd
 root.mainloop()
